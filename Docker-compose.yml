@@ -4,8 +4,8 @@ services:
   python-app:
     image: keycloak-flask:0.1
     environment:
-      CLIENT_ID: "flask-app"
-      CLIENT_SECRET: "5b58b6ce-f4bc-4595-ba9c-5544c21c3240"
-      DISCOVERY_URL: "https://keycloak.alienempire.org/auth/realms/Demo/.well-known/openid-configuration"
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      DISCOVERY_URL: ${DISCOVERY_URL}
     ports:
       - 5000:5000

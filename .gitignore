@@ -3,3 +3,4 @@ env/
 __pycache__/
 Dockerfile.*
 sqlite_db
+.env

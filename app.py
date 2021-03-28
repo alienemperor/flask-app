@@ -53,10 +53,8 @@ def index():
     if current_user.is_authenticated:
         return (
             "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
             '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
+                current_user.name, current_user.email
             )
         )
     else:
@@ -119,22 +117,21 @@ def callback():
     # You want to make sure their email is verified
     # The user authenticated, authorized your app,
     # and now you've verified their email
-    if userinfo_response.json().get("email_verified"):
+    if userinfo_response.json().get("sub"):
         unique_id = userinfo_response.json()["sub"]
         users_email = userinfo_response.json()["email"]
-        picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["given_name"]
     else:
-        return "User email not available or not verified.", 400
+        return "User email not available", 400
     
     # Create a user in your db with the information provided
     user = User(
-        id_=unique_id, name=users_name, email=users_email, profile_pic=picture
+        id_=unique_id, name=users_name, email=users_email
     )
 
     # Doesn't exist? Add it to the database.
     if not User.get(unique_id):
-        User.create(unique_id, users_name, users_email, picture)
+        User.create(unique_id, users_name, users_email)
 
     # Begin user session by logging the user in
     login_user(user)
