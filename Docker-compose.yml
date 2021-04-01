@@ -1,11 +1,13 @@
-version: "3.8"
+version: "3"
 
 services:
   python-app:
-    image: keycloak-flask:0.1
+    image: alienemperor/flask-app
     environment:
       CLIENT_ID: ${CLIENT_ID}
       CLIENT_SECRET: ${CLIENT_SECRET}
       DISCOVERY_URL: ${DISCOVERY_URL}
+    volumes: 
+      - ./db/:/app/db/
     ports:
       - 5000:5000
